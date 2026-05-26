@@ -1,0 +1,88 @@
+---
+import { SITE, HERO } from '../content/profile';
+
+// "Available for work" date — first day of next month
+const now = new Date();
+const next = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+const availDate = new Intl.DateTimeFormat('en-US', { month: 'short', year: '2-digit' }).format(next);
+---
+
+<section id="hero" class="padding-x relative">
+  <div class="flex min-h-svh w-full flex-col items-stretch justify-end pt-32 pb-10">
+    <!-- Giant name -->
+    <div class="w-full overflow-hidden">
+      <h1 class="sr-only">{SITE.fullName}</h1>
+      <svg
+        viewBox="0 0 1200 180"
+        class="block w-full fill-flax-smoke-900"
+        aria-hidden="true"
+      >
+        <text
+          x="50%"
+          y="55%"
+          dominant-baseline="middle"
+          text-anchor="middle"
+          font-family="title, Cabinet Grotesk, sans-serif"
+          font-weight="800"
+          font-size="180"
+          letter-spacing="-4"
+        >MINH VO</text>
+      </svg>
+    </div>
+
+    <!-- Three column row -->
+    <div class="mt-10 grid w-full grid-cols-12 gap-y-10 lg:gap-x-10">
+      <!-- Left: arrow + who am i + button -->
+      <div class="col-span-12 flex flex-col items-start gap-10 sm:col-span-4">
+        <svg
+          stroke="currentColor"
+          fill="none"
+          stroke-width="1.25"
+          viewBox="6 6 12 12"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="hidden h-6 w-6 text-flax-smoke-500 sm:block"
+          aria-hidden="true"
+        >
+          <line x1="7" y1="7" x2="17" y2="17"></line>
+          <polyline points="17 7 17 17 7 17"></polyline>
+        </svg>
+
+        <p class="heading-5 max-w-[37ch] text-balance font-medium leading-snug">
+          {HERO.body}
+        </p>
+
+        <a href="#contact-section" class="btn-pill">
+          <span class="btn-hover" aria-hidden="true">Get in touch</span>
+          <span class="btn-label">Get in touch</span>
+        </a>
+      </div>
+
+      <!-- Middle: profile image / illustration -->
+      <div class="col-span-12 sm:col-span-4 md:h-[50vh]">
+        <div class="relative h-[28vh] overflow-hidden rounded-lg bg-flax-smoke-200 sm:h-full">
+          <img
+            src="/images/hero.webp"
+            alt="Watercolor portrait composition in muted olive tones"
+            width="600"
+            height="600"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            class="size-full scale-95 rounded-lg object-cover object-center brightness-110 grayscale"
+          />
+        </div>
+      </div>
+
+      <!-- Right: available for work -->
+      <div class="col-span-12 flex flex-col items-end justify-end text-end sm:col-span-4">
+        <p class="text-xs font-medium uppercase leading-snug tracking-tight text-flax-smoke-700">
+          Available for engagements
+        </p>
+        <h3 class="heading-1-alt font-fancy font-bold leading-none tracking-tight text-flax-smoke-900">
+          {availDate}
+        </h3>
+      </div>
+    </div>
+  </div>
+</section>

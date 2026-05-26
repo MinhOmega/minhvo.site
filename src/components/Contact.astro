@@ -1,0 +1,60 @@
+---
+import { CONTACT } from '../content/profile';
+---
+
+<section
+  id="contact-section"
+  class="relative min-h-svh w-full overflow-y-clip p-[4vh]"
+>
+  <div class="flex-center relative min-h-[88vh] w-full flex-col overflow-hidden rounded-lg bg-black p-8 text-center uppercase">
+    <!-- Background watercolor -->
+    <img
+      src="/images/hero.webp"
+      alt=""
+      aria-hidden="true"
+      class="absolute inset-0 size-full rounded-lg object-cover object-center brightness-[0.35] grayscale"
+    />
+
+    <div class="flex-center relative z-10 flex-col gap-y-8">
+      <p class="heading-4 max-w-[30ch] text-center font-mono text-flax-smoke-300">
+        Your idea is a system waiting to be built.
+      </p>
+      <h3 class="heading-1 max-w-[12ch] text-center leading-none text-flax-smoke-200">
+        Let's Make it happen
+      </h3>
+      <div class="mt-4 scale-125 sm:scale-150">
+        <a class="btn-pill" href={`mailto:${CONTACT.email}`}>
+          <span class="btn-hover" aria-hidden="true">Get in touch</span>
+          <span class="btn-label">Get in touch</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="absolute bottom-5 left-0 right-0 flex w-full items-center justify-between px-6">
+      <div class="hidden md:flex">
+        <div class="grid h-16 w-16 place-items-center rounded-full border border-flax-smoke-300 text-flax-smoke-300">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="size-8 spin-slow">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M2 12h20M12 2a14 14 0 010 20M12 2a14 14 0 000 20" stroke="currentColor" stroke-width="1.2"/>
+          </svg>
+        </div>
+        <div class="ml-[-1px] flex flex-col border border-l-0 border-flax-smoke-300 font-mono text-flax-smoke-300">
+          <p class="border-b border-flax-smoke-300 px-3 py-1 font-bold uppercase text-xs">
+            Working Globally
+          </p>
+          <p class="px-3 py-1 text-xs">{CONTACT.location} · GMT+7</p>
+        </div>
+      </div>
+
+      <div class="text-flax-smoke-500">
+        <p class="text-xs font-bold uppercase">For further inquiries</p>
+        <a
+          href={`mailto:${CONTACT.email}`}
+          class="link-underline text-right font-medium tracking-wider lowercase text-flax-smoke-300"
+        >
+          {CONTACT.email}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

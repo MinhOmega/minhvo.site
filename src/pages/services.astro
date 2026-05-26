@@ -7,31 +7,33 @@ const description = `AI engineering, full-stack web, cloud infrastructure, and R
 ---
 
 <BaseLayout title={title} description={description}>
-  <section class="container-x pt-20 pb-12">
-    <p class="text-sm uppercase tracking-[0.25em] text-[color:var(--color-muted)]">Services</p>
-    <h1 class="mt-6 text-5xl sm:text-6xl">What I do.</h1>
-    <p class="mt-8 max-w-2xl text-lg text-[color:var(--color-muted)]">
+  <section class="padding-x pt-32 pb-12">
+    <p class="text-xs uppercase tracking-[0.25em] text-flax-smoke-500">( Services )</p>
+    <h1 class="reveal heading-1 mt-6 font-extrabold uppercase leading-none">What I do /</h1>
+    <p class="reveal heading-4 mt-10 max-w-[40ch] font-medium text-balance">
       Focused engagements across AI engineering, full-stack web, cloud architecture, and mobile. Pick the lane — or combine.
     </p>
   </section>
 
-  <section class="container-x pb-16 grid sm:grid-cols-2 gap-x-10 gap-y-12 border-t hairline pt-12">
-    {SERVICES.map((s, i) => (
-      <article>
-        <p class="text-sm text-[color:var(--color-muted)]">0{i + 1}</p>
-        <h2 class="mt-2 text-2xl font-serif">{s.title}</h2>
-        <p class="mt-3 text-[color:var(--color-muted)]">{s.summary}</p>
-      </article>
-    ))}
+  <section class="padding-x pb-16 border-t hairline pt-12">
+    <div class="grid sm:grid-cols-2 gap-x-10 gap-y-14">
+      {SERVICES.map((s, i) => (
+        <article class="reveal border-t hairline pt-6">
+          <p class="font-mono text-sm text-flax-smoke-500">( {(i + 1).toString().padStart(2, '0')} )</p>
+          <h2 class="mt-3 font-fancy text-3xl font-bold uppercase">{s.title}</h2>
+          <p class="mt-4 text-flax-smoke-700 max-w-[42ch]">{s.summary}</p>
+        </article>
+      ))}
+    </div>
   </section>
 
-  <section class="container-x py-16 border-t hairline">
-    <h2 class="text-3xl sm:text-4xl max-w-2xl">Ready to start? <span class="text-[color:var(--color-muted)]">Send a brief.</span></h2>
-    <a
-      href={`mailto:${CONTACT.email}`}
-      class="mt-8 inline-flex items-center gap-2 bg-[color:var(--color-ink)] text-[color:var(--color-paper)] px-5 py-3 text-sm font-medium"
-    >
-      {CONTACT.email}
+  <section class="padding-x py-20 border-t hairline">
+    <h2 class="heading-2 max-w-2xl font-bold uppercase">
+      Ready to start? <span class="text-flax-smoke-500">Send a brief.</span>
+    </h2>
+    <a href={`mailto:${CONTACT.email}`} class="btn-pill mt-8 inline-flex">
+      <span class="btn-hover" aria-hidden="true">{CONTACT.email}</span>
+      <span class="btn-label">{CONTACT.email}</span>
     </a>
   </section>
 </BaseLayout>

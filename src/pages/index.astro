@@ -1,148 +1,29 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import {
-  SITE,
-  HERO,
-  SERVICES,
-  PROJECTS,
-  EXPERIENCE,
-  CONTACT,
-  TESTIMONIALS,
-} from '../content/profile';
+import Hero from '../components/Hero.astro';
+import Services from '../components/Services.astro';
+import Marquee from '../components/Marquee.astro';
+import Works from '../components/Works.astro';
+import About from '../components/About.astro';
+import Testimonials from '../components/Testimonials.astro';
+import Contact from '../components/Contact.astro';
+import { SITE } from '../content/profile';
 
 const title = `${SITE.fullName} — ${SITE.title}`;
 const description = SITE.description;
 ---
 
 <BaseLayout title={title} description={description} type="profile">
-  <!-- HERO -->
-  <section class="container-x pt-20 sm:pt-28 pb-16 grid lg:grid-cols-[1.4fr_1fr] gap-12 items-center">
-    <div>
-      <p class="text-sm uppercase tracking-[0.25em] text-[color:var(--color-muted)]">
-        {HERO.greeting}
-      </p>
-      <h1 class="mt-6 text-5xl sm:text-7xl">
-        {HERO.headline}
-      </h1>
-      <p class="mt-8 max-w-2xl text-lg text-[color:var(--color-muted)]">
-        {HERO.body}
-      </p>
-      <div class="mt-10 flex flex-wrap gap-4">
-        <a
-          href={HERO.ctaPrimary.href}
-          class="inline-flex items-center gap-2 bg-[color:var(--color-ink)] text-[color:var(--color-paper)] px-5 py-3 text-sm font-medium hover:opacity-90 transition-opacity"
-        >
-          {HERO.ctaPrimary.label} <span aria-hidden="true">→</span>
-        </a>
-        <a
-          href={HERO.ctaSecondary.href}
-          class="inline-flex items-center gap-2 border border-[color:var(--color-ink)] px-5 py-3 text-sm font-medium hover:bg-[color:var(--color-ink)] hover:text-[color:var(--color-paper)] transition-colors"
-        >
-          {HERO.ctaSecondary.label}
-        </a>
-      </div>
-    </div>
-    <div class="hidden lg:block">
-      <img
-        src="/images/hero.webp"
-        alt="Hand-painted watercolor composition in muted olive and sepia tones"
-        width="600"
-        height="600"
-        loading="eager"
-        fetchpriority="high"
-        decoding="async"
-        class="w-full h-auto aspect-square object-cover"
-      />
-    </div>
-  </section>
+  <Hero />
 
-  <!-- SERVICES -->
-  <section id="services" class="container-x py-16 border-t hairline">
-    <div class="flex items-baseline justify-between mb-10">
-      <h2 class="text-3xl sm:text-4xl">Services</h2>
-      <a href="/services" class="link-underline text-sm">All services →</a>
-    </div>
-    <div class="grid sm:grid-cols-2 gap-8">
-      {SERVICES.map((s) => (
-        <article>
-          <h3 class="text-xl font-serif">{s.title}</h3>
-          <p class="mt-3 text-[color:var(--color-muted)]">{s.summary}</p>
-        </article>
-      ))}
-    </div>
-  </section>
+  <!-- Dark sectional block: services + marquee + works -->
+  <div class="relative rounded-t-3xl bg-[#0B0B0A] py-[5%] text-flax-smoke-200">
+    <Services />
+    <Marquee />
+    <Works />
+  </div>
 
-  <!-- WORKS -->
-  <section id="works" class="container-x py-16 border-t hairline">
-    <div class="flex items-baseline justify-between mb-10">
-      <h2 class="text-3xl sm:text-4xl">Selected work</h2>
-      <a href="/works" class="link-underline text-sm">All projects →</a>
-    </div>
-    <ul class="divide-y divide-[color:color-mix(in_oklab,var(--color-ink)_12%,transparent)]">
-      {PROJECTS.slice(0, 3).map((p) => (
-        <li class="py-6 grid sm:grid-cols-[1fr_auto] gap-3">
-          <div>
-            <p class="font-serif text-xl">{p.name}</p>
-            <p class="text-sm text-[color:var(--color-muted)]">{p.org} · {p.stack}</p>
-          </div>
-          <p class="text-sm text-[color:var(--color-muted)] sm:text-right">{p.period}</p>
-        </li>
-      ))}
-    </ul>
-  </section>
-
-  <!-- ABOUT (compact) -->
-  <section id="about" class="container-x py-16 border-t hairline">
-    <h2 class="text-3xl sm:text-4xl">About</h2>
-    <div class="mt-8 grid sm:grid-cols-2 gap-10">
-      <p class="text-[color:var(--color-muted)]">
-        Seven years building enterprise SaaS and Gen AI platforms for global clients. I architect multi-tenant systems on Azure and AWS, ship production-grade RAG, and lead AI-Native engineering workflows.
-      </p>
-      <ul class="space-y-3 text-sm">
-        {EXPERIENCE.map((e) => (
-          <li class="flex justify-between gap-4">
-            <span>
-              <span class="font-medium">{e.role}</span>,
-              <span class="text-[color:var(--color-muted)]"> {e.company}</span>
-            </span>
-            <span class="text-[color:var(--color-muted)] whitespace-nowrap">{e.period}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-    <a href="/about" class="link-underline text-sm mt-8 inline-block">More about me →</a>
-  </section>
-
-  <!-- TESTIMONIALS -->
-  <section id="testimonials" class="container-x py-16 border-t hairline">
-    <h2 class="text-3xl sm:text-4xl">Words from collaborators</h2>
-    <div class="mt-10 grid sm:grid-cols-2 gap-10">
-      {TESTIMONIALS.map((t) => (
-        <figure>
-          <blockquote class="font-serif text-xl leading-snug">“{t.quote}”</blockquote>
-          <figcaption class="mt-4 text-sm text-[color:var(--color-muted)]">
-            — {t.author}, {t.org}
-          </figcaption>
-        </figure>
-      ))}
-    </div>
-  </section>
-
-  <!-- CONTACT CTA -->
-  <section id="contact" class="container-x py-20 border-t hairline">
-    <h2 class="text-3xl sm:text-5xl max-w-2xl">
-      Have a project in mind? <span class="text-[color:var(--color-muted)]">Let’s talk.</span>
-    </h2>
-    <div class="mt-8 flex flex-wrap gap-4">
-      <a
-        href={`mailto:${CONTACT.email}`}
-        class="inline-flex items-center gap-2 bg-[color:var(--color-ink)] text-[color:var(--color-paper)] px-5 py-3 text-sm font-medium"
-      >
-        {CONTACT.email}
-      </a>
-      <a href="/contact" class="inline-flex items-center gap-2 border border-[color:var(--color-ink)] px-5 py-3 text-sm font-medium">
-        Contact page →
-      </a>
-    </div>
-  </section>
+  <About />
+  <Testimonials />
+  <Contact />
 </BaseLayout>

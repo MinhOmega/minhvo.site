@@ -1,0 +1,94 @@
+---
+import { PROJECTS } from '../content/profile';
+
+const works = PROJECTS.map((p, i) => ({
+  number: i + 1,
+  name: p.name,
+  category: p.stack.split('·')[0]?.trim() ?? p.org,
+  tags: p.stack.split('·').slice(0, 3).map((s) => s.trim()),
+  year: p.period.split('—')[0].trim(),
+  org: p.org,
+  bullets: p.bullets,
+}));
+---
+
+<section id="works" class="common-padding mb-20">
+  <div class="flex flex-col">
+    <h3 class="reveal heading-1 text-start font-bold uppercase leading-none">
+      Selected Projects /
+    </h3>
+    <p class="heading-1 hidden w-4/5 text-end font-extrabold text-flax-smoke-400/50 sm:block">
+      ( {works.length} )
+    </p>
+
+    <div class="reveal mt-[5%] grid grid-cols-12 gap-x-4 lg:gap-x-10 text-flax-smoke-300">
+      <p class="heading-6 col-span-4 text-center text-nowrap text-flax-smoke-300/85 lg:col-start-2">
+        ( {works.length} PROJECTS )
+      </p>
+      <p class="heading-4 col-span-8 w-full text-balance font-fancy sm:font-semibold lg:col-span-7">
+        Featured work shipped across enterprise AI, multi-tenant SaaS, and mobile — meticulously crafted over the years.
+      </p>
+    </div>
+  </div>
+
+  <div class="relative mt-12 grid size-full grid-cols-12 gap-x-4 lg:mt-[10%] lg:gap-x-10">
+    <!-- Sticky index counter -->
+    <div class="text-flax-smoke-100 sticky top-12 col-span-5 hidden h-fit w-full overflow-hidden text-[18vw] leading-[0.8] font-semibold md:flex font-title">
+      <span class="-tracking-wider">0</span>
+      <span id="work-index" class="-tracking-wider">1.</span>
+    </div>
+
+    <ul class="relative col-span-12 flex flex-col space-y-12 md:col-span-7">
+      {works.map((w, i) => (
+        <li class="work-card" data-work-index={i + 1}>
+          <article class="group">
+            <div class="relative aspect-square overflow-hidden rounded-lg bg-flax-smoke-800">
+              <div class="absolute inset-0 flex items-center justify-center p-10 text-center text-flax-smoke-200">
+                <div>
+                  <p class="font-mono text-xs uppercase tracking-[0.2em] text-flax-smoke-400">{w.org} · {w.year}</p>
+                  <p class="mt-4 font-fancy text-2xl sm:text-3xl font-bold">{w.name}</p>
+                  <ul class="mt-6 space-y-2 text-sm text-flax-smoke-300">
+                    {w.bullets.slice(0, 2).map((b) => <li>· {b}</li>)}
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <p class="heading-6 mt-3 leading-none font-title">{w.category}</p>
+            <div class="mt-1 items-center justify-between sm:flex">
+              <h3 class="heading-3 font-title font-bold uppercase">{w.name}</h3>
+              <div class="mt-2 flex flex-wrap gap-1.5 sm:mt-0">
+                {w.tags.map((t) => (
+                  <span class="rounded-full border border-flax-smoke-300 px-3 py-1 text-sm transition-colors duration-500 ease-in-out hover:bg-flax-smoke-300 hover:text-flax-smoke-900">
+                    {t}
+                  </span>
+                ))}
+                <span class="rounded-full border border-flax-smoke-300 bg-flax-smoke-300 px-3 py-1 text-sm text-flax-smoke-900 transition-colors duration-500 ease-in-out hover:bg-transparent hover:text-flax-smoke-300">
+                  {w.year}
+                </span>
+              </div>
+            </div>
+          </article>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<script>
+  const indexEl = document.getElementById('work-index');
+  const cards = document.querySelectorAll('.work-card');
+  if (indexEl && cards.length) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const idx = (entry.target as HTMLElement).dataset.workIndex ?? '1';
+            indexEl.textContent = `${idx}.`;
+          }
+        });
+      },
+      { threshold: 0.5, rootMargin: '-25% 0px -25% 0px' }
+    );
+    cards.forEach((c) => io.observe(c));
+  }
+</script>

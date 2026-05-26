@@ -1,0 +1,92 @@
+---
+import { SERVICES } from '../content/profile';
+
+// Hetari uses 3 sticky cards. We'll show the first 3 services with a 4th below in a smaller card.
+const cards = SERVICES.slice(0, 3).map((s, i) => ({
+  ...s,
+  number: i + 1,
+  headings: deriveHeadings(s.title),
+  shape: shapeFor(i),
+}));
+
+function deriveHeadings(title: string): string[] {
+  switch (title) {
+    case 'AI Engineering':
+      return ['Multi-tenant RAG', 'MCP & Tool Agents', 'Streaming UX'];
+    case 'Full-Stack Web':
+      return ['React / Next.js', 'NestJS APIs', 'Performance-first'];
+    case 'Cloud Infrastructure':
+      return ['Azure & AWS', 'Terraform IaC', 'AKS / Karpenter'];
+    case 'Mobile (React Native)':
+      return ['Tablet-first UX', 'Offline-first', 'IAP & Realtime'];
+    default:
+      return ['Strategy', 'Delivery', 'Optimization'];
+  }
+}
+
+function shapeFor(i: number): string {
+  const shapes = [
+    `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M100 0C103.395 53.7596 146.24 96.6052 200 100C146.24 103.395 103.395 146.24 100 200C96.6052 146.24 53.7596 103.395 0 100C53.7596 96.6052 96.6052 53.7596 100 0Z"/></svg>`,
+    `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M127.14 200C99.9942 200 99.9943 167.423 72.8487 167.423C41.6048 167.423 0 158.386 0 127.133C0 99.9885 32.5678 99.9885 32.5678 72.8445C32.5678 41.6139 41.6048 0 72.8602 0C100.006 0 100.006 32.5774 127.151 32.5774C158.384 32.5774 200 41.6139 200 72.8675C200 100.012 167.421 100.012 167.421 127.156C167.409 158.444 158.384 200 127.14 200Z"/></svg>`,
+    `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M100 0L170.711 29.2893L200 100L170.711 170.711L100 200L29.2893 170.711L0 100L29.2893 29.2893L100 0Z"/></svg>`,
+  ];
+  return shapes[i % shapes.length];
+}
+
+function topClass(i: number) {
+  if (i === 0) return 'top-[calc(20vh+0em)] mb-[17.25em]';
+  if (i === 1) return 'top-[calc(20vh+5.75em)] mb-[11.5em]';
+  return 'top-[calc(20vh+11.5em)] mb-[5.75em]';
+}
+---
+
+<section id="services" class="padding-x mb-20">
+  <div class="flex w-full flex-col">
+    <h3 class="reveal heading-1 font-extrabold uppercase">What I do /</h3>
+
+    <div class="reveal mt-[5%] grid grid-cols-12 gap-x-4 lg:gap-x-10 text-flax-smoke-300">
+      <p class="heading-6 col-span-4 text-center text-nowrap text-flax-smoke-300/85 md:col-start-4">
+        ( SERVICES )
+      </p>
+      <p class="heading-4 col-span-8 w-full text-balance font-fancy sm:font-semibold md:col-span-5">
+        Production-grade systems don't happen by chance. I design and ship AI-native architectures with the discipline of a senior engineer and the speed of a startup.
+      </p>
+    </div>
+  </div>
+
+  <div class="relative mt-12 w-full lg:mt-[10%]">
+    <div class="mt-12 flex flex-col justify-between gap-y-16">
+      {cards.map((card, i) => (
+        <article class={`sticky border-t border-flax-smoke-500/50 bg-[#0B0B0A] ${topClass(i)}`}>
+          <div class="heading-2 max-sm:heading-3 grid grid-cols-12 items-center gap-3 py-6 text-left font-semibold">
+            <span class="col-span-2 self-center text-nowrap">( 0{card.number} )</span>
+            <h3 class="col-span-7 sm:col-span-6 text-nowrap">{card.title}</h3>
+            <div
+              class="hidden lg:block col-span-3 size-12 fill-flax-smoke-400/50 spin-slow"
+              set:html={card.shape}
+            />
+          </div>
+
+          <div class="relative grid min-h-[35vh] grid-cols-12 md:min-h-[40vh]">
+            <div class="col-span-12 sm:col-span-7 sm:col-start-5 flex w-full flex-col gap-y-5">
+              <p class="max-w-[40ch] text-balance text-base font-medium text-flax-smoke-300/80">
+                {card.summary}
+              </p>
+
+              <div>
+                {card.headings.map((h, j) => (
+                  <p class={`flex gap-x-3 py-1.5 font-bold ${j === 1 ? 'border-y border-flax-smoke-500/50' : ''}`}>
+                    <span class="self-center font-mono text-base font-medium text-flax-smoke-500/70">
+                      {(j + 1).toString().padStart(2, '0')}
+                    </span>
+                    {h}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

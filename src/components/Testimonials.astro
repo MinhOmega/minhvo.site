@@ -1,0 +1,91 @@
+---
+import { TESTIMONIALS } from '../content/profile';
+---
+
+<section
+  id="testimonials-section"
+  class="common-padding relative mx-auto min-h-svh overflow-y-clip py-16"
+>
+  <div class="grid w-full grid-cols-12 border-b border-flax-smoke-300 pb-10">
+    <h3 class="reveal heading-1 col-span-12 font-bold uppercase leading-none text-flax-smoke-950">
+      Don't take my <br /> word for it /
+    </h3>
+    <div class="reveal mt-[5%] col-span-12 flex justify-end gap-10 sm:gap-20 lg:col-span-10 text-flax-smoke-800">
+      <p class="heading-6 text-center text-nowrap uppercase">( Testimonials )</p>
+      <p class="heading-6 w-full text-balance font-fancy sm:max-w-[40ch]">
+        Here's what collaborators and clients have to say. Their satisfaction
+        and meeting expectations are my top priorities — ensuring the best
+        engineering experience possible.
+      </p>
+    </div>
+  </div>
+
+  <div class="mt-12 grid w-full grid-cols-12 gap-10 lg:h-[60svh]">
+    <!-- Quote panel -->
+    <div class="col-span-12 flex flex-col lg:col-span-6">
+      <p
+        id="testimonial-quote"
+        class="heading-3 mb-10 max-w-[30ch] font-semibold leading-tight"
+      >
+        " {TESTIMONIALS[0].quote} "
+      </p>
+
+      <p
+        id="testimonial-author"
+        class="heading-6 mb-6 font-semibold"
+      >
+        <span class="block">{TESTIMONIALS[0].author}</span>
+        <span class="block text-flax-smoke-400">{TESTIMONIALS[0].org}</span>
+      </p>
+
+      <div class="mt-auto flex items-end justify-between">
+        <div class="heading-5 flex w-2/12 items-center gap-3 overflow-hidden">
+          <span id="testimonial-index">1</span>
+          <span class="h-px w-full bg-black"></span>
+          <span>{TESTIMONIALS.length}</span>
+        </div>
+
+        <div class="flex gap-3">
+          <button type="button" class="btn-pill" id="testimonial-prev">
+            <span class="btn-hover" aria-hidden="true">Prev</span>
+            <span class="btn-label">Prev</span>
+          </button>
+          <button type="button" class="btn-pill" id="testimonial-next">
+            <span class="btn-hover" aria-hidden="true">Next</span>
+            <span class="btn-label">Next</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Image / accent panel -->
+    <div class="col-span-12 lg:col-span-6">
+      <div class="relative h-[40vh] overflow-hidden rounded-lg bg-flax-smoke-500 lg:h-full">
+        <div
+          class="absolute inset-0 grid place-items-center bg-flax-smoke-500"
+        >
+          <span class="font-fancy text-flax-smoke-100 text-[clamp(4rem,12vw,10rem)] font-bold leading-none opacity-30">"</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline define:vars={{ data: TESTIMONIALS }}>
+  let i = 0;
+  const quote = document.getElementById('testimonial-quote');
+  const author = document.getElementById('testimonial-author');
+  const idx = document.getElementById('testimonial-index');
+  const prev = document.getElementById('testimonial-prev');
+  const next = document.getElementById('testimonial-next');
+
+  function render() {
+    const t = data[i];
+    if (!quote || !author || !idx) return;
+    quote.textContent = `" ${t.quote} "`;
+    author.innerHTML = `<span class="block">${t.author}</span><span class="block text-flax-smoke-400">${t.org}</span>`;
+    idx.textContent = String(i + 1);
+  }
+  prev?.addEventListener('click', () => { i = (i - 1 + data.length) % data.length; render(); });
+  next?.addEventListener('click', () => { i = (i + 1) % data.length; render(); });
+</script>

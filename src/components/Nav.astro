@@ -1,32 +1,132 @@
 ---
-import { NAV, SITE } from '../content/profile';
+import { NAV, SITE, CONTACT } from '../content/profile';
 
-const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const navLinks = [
+  { label: 'Services', url: '#services' },
+  { label: 'Projects', url: '#works' },
+  { label: 'About', url: '#about-me-section' },
+  { label: 'Testimonials', url: '#testimonials-section' },
+  { label: 'Contact', url: '#contact-section' },
+];
+
+const sideNavLinks = [{ label: 'Home', url: '#hero' }, ...navLinks];
+
+const socialLinks = [
+  { label: 'GitHub', url: CONTACT.github },
+  { label: 'LinkedIn', url: CONTACT.linkedin },
+  { label: 'Email', url: `mailto:${CONTACT.email}` },
+];
 ---
 
-<header class="border-b hairline">
-  <div class="container-x flex items-center justify-between h-16">
-    <a href="/" class="font-serif text-xl tracking-tight">
-      {SITE.name}<span class="text-[color:var(--color-accent)]">.</span>
-    </a>
-    <nav aria-label="Primary">
-      <ul class="flex items-center gap-6 text-sm">
-        {NAV.map((item) => {
-          const itemPath = item.href.replace(/\/$/, '') || '/';
-          const isActive = path === itemPath;
-          return (
-            <li>
-              <a
-                href={item.href}
-                class={`link-underline ${isActive ? 'text-[color:var(--color-ink)]' : 'text-[color:var(--color-muted)]'}`}
-                aria-current={isActive ? 'page' : undefined}
-              >
-                {item.label}
-              </a>
-            </li>
-          );
-        })}
+<!-- Burger / open button -->
+<button
+  type="button"
+  id="burger"
+  class="burger"
+  aria-label="Open menu"
+  aria-controls="side-nav"
+  aria-expanded="false"
+>
+  <span class="burger-lines" aria-hidden="true"></span>
+</button>
+
+<!-- Side panel backdrop -->
+<div id="side-nav-backdrop" class="side-nav-backdrop" aria-hidden="true"></div>
+
+<!-- Side panel -->
+<aside id="side-nav" class="side-nav" tabindex="-1" aria-hidden="true">
+  <div class="flex h-full flex-col justify-between">
+    <div class="mt-10">
+      <ul class="space-y-1">
+        {sideNavLinks.map((l) => (
+          <li class="overflow-hidden">
+            <a class="side-nav-link" href={l.url} data-side-nav-link>
+              <span class="dot" aria-hidden="true"></span>
+              <span class="label">{l.label}</span>
+            </a>
+          </li>
+        ))}
       </ul>
-    </nav>
+    </div>
+
+    <div class="text-flax-smoke-50">
+      <p class="text-xs font-bold uppercase tracking-[0.18em] text-flax-smoke-300">
+        Email address
+      </p>
+      <a
+        href={`mailto:${CONTACT.email}`}
+        class="mt-1 inline-block link-underline font-medium tracking-wide text-flax-smoke-100"
+      >
+        {CONTACT.email}
+      </a>
+
+      <div class="mt-6 flex flex-wrap gap-2">
+        {socialLinks.map((s) => (
+          <a
+            href={s.url}
+            target="_blank"
+            rel="noopener me"
+            class="btn-pill border border-flax-smoke-600"
+          >
+            <span class="btn-hover" aria-hidden="true">{s.label}</span>
+            <span class="btn-label">{s.label}</span>
+          </a>
+        ))}
+      </div>
+    </div>
   </div>
+</aside>
+
+<!-- Top header / desktop links -->
+<header class="padding-x absolute inset-x-0 top-0 z-30 pt-6">
+  <nav class="flex items-start justify-between gap-4">
+    <a href="/" class="group">
+      <h2 class="font-fancy text-xl font-extrabold uppercase md:text-3xl text-flax-smoke-900">
+        {SITE.name}<span class="inline-block transition-transform duration-500 ease-in-out group-hover:rotate-[360deg]">&copy;</span>
+      </h2>
+    </a>
+
+    <p class="hidden text-xs font-bold uppercase tracking-wide text-flax-smoke-500 md:block md:text-sm">
+      available for engineering<br />
+      engagements and collaboration
+    </p>
+
+    <ul class="hidden gap-3 text-base font-medium md:flex lg:gap-5 lg:text-lg xl:text-xl text-flax-smoke-700">
+      {navLinks.map((l, i) => (
+        <li>
+          <a class="link-underline" href={l.url}>
+            {l.label}{i !== navLinks.length - 1 ? ',' : ''}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
 </header>
+
+<script>
+  const burger = document.getElementById('burger');
+  const panel = document.getElementById('side-nav');
+  const backdrop = document.getElementById('side-nav-backdrop');
+
+  function setOpen(open: boolean) {
+    if (!burger || !panel || !backdrop) return;
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    panel.classList.toggle('open', open);
+    panel.setAttribute('aria-hidden', String(!open));
+    backdrop.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+
+  burger?.addEventListener('click', () => {
+    const isOpen = burger.getAttribute('aria-expanded') === 'true';
+    setOpen(!isOpen);
+  });
+  backdrop?.addEventListener('click', () => setOpen(false));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setOpen(false);
+  });
+  document.querySelectorAll('[data-side-nav-link]').forEach((el) => {
+    el.addEventListener('click', () => setOpen(false));
+  });
+</script>

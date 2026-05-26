@@ -1,0 +1,65 @@
+---
+import { SITE, EXPERIENCE } from '../content/profile';
+---
+
+<section
+  id="about-me-section"
+  class="common-padding relative z-10 overflow-y-clip rounded-b-3xl bg-[#0B0B0A] text-flax-smoke-200 shadow-2xl"
+>
+  <div class="grid grid-cols-12 md:gap-x-10">
+    <div class="hidden md:col-span-4 md:block">
+      <svg
+        stroke="currentColor"
+        fill="none"
+        stroke-width="1.25"
+        viewBox="6 6 12 12"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="size-16 text-flax-smoke-400"
+        aria-hidden="true"
+      >
+        <line x1="7" y1="7" x2="17" y2="17"></line>
+        <polyline points="17 7 17 17 7 17"></polyline>
+      </svg>
+    </div>
+
+    <h3 class="reveal heading-1-alt lg:heading-1 col-span-12 font-extrabold uppercase leading-none md:col-span-8 md:col-start-6">
+      Engineer, Architect, AI-Native /
+    </h3>
+  </div>
+
+  <div class="padding-y mt-6 grid grid-cols-12 md:gap-x-10">
+    <div class="hidden md:col-span-4 md:block">
+      <div class="aspect-[1/1.5] overflow-hidden rounded-lg bg-flax-smoke-700/40">
+        <img
+          src="/images/hero.webp"
+          alt="Watercolor portrait"
+          class="size-full rounded-lg object-cover object-top mix-blend-screen brightness-90 grayscale"
+        />
+      </div>
+    </div>
+
+    <div class="col-span-12 mt-10 md:col-span-8 md:col-start-6">
+      <p class="heading-4 max-w-[40ch] text-balance font-medium leading-snug">
+        With seven years building enterprise SaaS and Gen AI platforms, I take systems from architecture to production — owning the cloud foundation, the data layer, and the AI experience end-to-end.
+      </p>
+
+      <div class="mt-[5%] flex justify-start gap-10 sm:gap-20 text-flax-smoke-300">
+        <p class="heading-6 text-center text-nowrap text-flax-smoke-300/85">( ABOUT )</p>
+        <p class="heading-6 w-full text-balance font-fancy sm:max-w-[40ch]">
+          I architect multi-tenant systems on Azure and AWS, ship production-grade RAG, and lead AI-Native engineering workflows. When I'm not in the IDE you can find me reading deep technical papers, sketching system diagrams, or shipping side projects.
+        </p>
+      </div>
+
+      <ul class="mt-12 space-y-4 border-t border-flax-smoke-700 pt-8">
+        {EXPERIENCE.map((e) => (
+          <li class="grid grid-cols-12 gap-3 text-sm sm:text-base">
+            <span class="col-span-12 sm:col-span-3 text-flax-smoke-400">{e.period}</span>
+            <span class="col-span-12 sm:col-span-4 font-medium">{e.role}</span>
+            <span class="col-span-12 sm:col-span-5 text-flax-smoke-300">{e.company} — {e.stack}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
