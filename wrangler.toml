@@ -1,0 +1,20 @@
+name = "minhvo-site"
+compatibility_date = "2024-11-06"
+account_id = "80034addce46bc22fe44d4fef490a396"
+
+[assets]
+directory = "./dist"
+not_found_handling = "404-page"
+
+# Routes — DNS records for minhvo.site / www.minhvo.site are already
+# orange-cloud proxied via Cloudflare (created by earlier Pages attachment),
+# so plain pattern routes are sufficient to intercept traffic and serve the
+# Worker. custom_domain = true is intentionally NOT set because the
+# leftover DNS records block that mode; the pattern routes work today.
+[[routes]]
+pattern = "minhvo.site/*"
+zone_id = "6a2b3978adaac5cc548939c3aa83fe84"
+
+[[routes]]
+pattern = "www.minhvo.site/*"
+zone_id = "6a2b3978adaac5cc548939c3aa83fe84"
