@@ -1,0 +1,25 @@
+---
+import { CONTACT, SITE } from '../content/profile';
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t hairline mt-24">
+  <div class="container-x py-10 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+    <div class="space-y-2">
+      <p class="font-serif text-2xl">{SITE.fullName}</p>
+      <p class="text-sm text-[color:var(--color-muted)] max-w-md">
+        {SITE.description}
+      </p>
+    </div>
+    <ul class="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+      <li><a class="link-underline" href={`mailto:${CONTACT.email}`}>Email</a></li>
+      <li><a class="link-underline" href={CONTACT.github} rel="me noopener" target="_blank">GitHub</a></li>
+      <li><a class="link-underline" href={CONTACT.linkedin} rel="me noopener" target="_blank">LinkedIn</a></li>
+      <li><a class="link-underline" href="/llms.txt">llms.txt</a></li>
+    </ul>
+  </div>
+  <div class="container-x pb-8 text-xs text-[color:var(--color-muted)] flex justify-between">
+    <span>© {year} {SITE.fullName}</span>
+    <span>Built with Astro · Hosted on Cloudflare</span>
+  </div>
+</footer>

@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE, SERVICES, CONTACT } from '../content/profile';
+
+const title = `Services — ${SITE.fullName}`;
+const description = `AI engineering, full-stack web, cloud infrastructure, and React Native services by ${SITE.fullName}.`;
+---
+
+<BaseLayout title={title} description={description}>
+  <section class="container-x pt-20 pb-12">
+    <p class="text-sm uppercase tracking-[0.25em] text-[color:var(--color-muted)]">Services</p>
+    <h1 class="mt-6 text-5xl sm:text-6xl">What I do.</h1>
+    <p class="mt-8 max-w-2xl text-lg text-[color:var(--color-muted)]">
+      Focused engagements across AI engineering, full-stack web, cloud architecture, and mobile. Pick the lane — or combine.
+    </p>
+  </section>
+
+  <section class="container-x pb-16 grid sm:grid-cols-2 gap-x-10 gap-y-12 border-t hairline pt-12">
+    {SERVICES.map((s, i) => (
+      <article>
+        <p class="text-sm text-[color:var(--color-muted)]">0{i + 1}</p>
+        <h2 class="mt-2 text-2xl font-serif">{s.title}</h2>
+        <p class="mt-3 text-[color:var(--color-muted)]">{s.summary}</p>
+      </article>
+    ))}
+  </section>
+
+  <section class="container-x py-16 border-t hairline">
+    <h2 class="text-3xl sm:text-4xl max-w-2xl">Ready to start? <span class="text-[color:var(--color-muted)]">Send a brief.</span></h2>
+    <a
+      href={`mailto:${CONTACT.email}`}
+      class="mt-8 inline-flex items-center gap-2 bg-[color:var(--color-ink)] text-[color:var(--color-paper)] px-5 py-3 text-sm font-medium"
+    >
+      {CONTACT.email}
+    </a>
+  </section>
+</BaseLayout>

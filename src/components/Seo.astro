@@ -1,0 +1,88 @@
+---
+import { SITE, CONTACT } from '../content/profile';
+
+interface Props {
+  title: string;
+  description?: string;
+  path: string;
+  image?: string;
+  type?: 'website' | 'article' | 'profile';
+}
+
+const {
+  title,
+  description = SITE.description,
+  path,
+  image = '/images/og-default.png',
+  type = 'website',
+} = Astro.props;
+
+const canonical = new URL(path, SITE.url).toString();
+const ogImage = new URL(image, SITE.url).toString();
+
+// Resolve sibling Markdown URL. Root → /index.md ; otherwise stripped trailing slash + .md
+const cleanedPath = path === '/' ? '/index' : path.replace(/\/$/, '');
+const markdownUrl = new URL(`${cleanedPath}.md`, SITE.url).toString();
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: SITE.fullName,
+  alternateName: SITE.name,
+  jobTitle: SITE.title,
+  url: SITE.url,
+  email: `mailto:${CONTACT.email}`,
+  sameAs: [CONTACT.github, CONTACT.linkedin],
+  description: SITE.description,
+  knowsAbout: [
+    'Software Engineering',
+    'TypeScript',
+    'React',
+    'Next.js',
+    'Generative AI',
+    'Retrieval-Augmented Generation',
+    'Model Context Protocol',
+    'Azure',
+    'AWS',
+  ],
+  worksFor: {
+    '@type': 'Organization',
+    name: 'Neurond AI',
+  },
+  alumniOf: {
+    '@type': 'CollegeOrUniversity',
+    name: 'Hue University of Sciences',
+  },
+};
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={SITE.fullName} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={`${SITE.fullName} — ${SITE.title}`} />
+<meta property="og:locale" content={SITE.locale} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+<meta name="twitter:creator" content={SITE.twitter} />
+
+<meta name="author" content={SITE.fullName} />
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+<meta name="googlebot" content="index,follow" />
+<meta name="theme-color" content="#f5f4ef" />
+
+<link rel="alternate" type="text/markdown" href={markdownUrl} title="Markdown version" />
+<link rel="alternate" type="text/plain" href={new URL('/llms.txt', SITE.url).toString()} title="LLM-friendly index" />
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
